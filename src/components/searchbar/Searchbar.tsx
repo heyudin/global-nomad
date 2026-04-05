@@ -1,10 +1,10 @@
-'use client';
-import Image from 'next/image';
-import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+"use client";
+import Image from "next/image";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
-import Button from './Button';
+import Button from "../Button";
 
-import ic_search from '@/assets/icons/main/ic-search.svg';
+import ic_search from "@/assets/icons/main/ic-search.svg";
 interface SearchbarProps {
   title: string;
   placeholder: string;
@@ -46,21 +46,21 @@ export default function Searchbar({
     const params = new URLSearchParams(searchParams);
     const trimmedValue = value.trim();
     if (!trimmedValue) {
-      params.delete('search');
+      params.delete("search");
       replace(`${pathName}?${params.toString()}`, {
         scroll: false,
       });
       return;
     }
     onSearch?.(trimmedValue);
-    params.set('search', trimmedValue);
+    params.set("search", trimmedValue);
     replace(`${pathName}?${params.toString()}`, {
       scroll: false,
     });
   };
 
   const handleEnterKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleClickButton();
     }
   };
@@ -86,7 +86,8 @@ export default function Searchbar({
           variant="primary"
           size="lg"
           className="bold text-background absolute right-3 bottom-1.5 h-[41px] w-[85px] text-[14px] md:bottom-2.5 md:h-[50px] md:w-[120px] md:text-[16px]"
-          onClick={handleClickButton}>
+          onClick={handleClickButton}
+        >
           검색하기
         </Button>
       </div>
