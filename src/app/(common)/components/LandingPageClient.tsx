@@ -1,43 +1,43 @@
-'use client';
+"use client";
 
 import {
   InfiniteData,
   useInfiniteQuery,
   useQuery,
-} from '@tanstack/react-query';
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+} from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
-import { getActivities } from '../../../api/activities';
+import { getActivities } from "../../../api/activities";
 
-import BannerActivities from './BannerActivities';
-import BestActivities from './BestActivities';
-import TotalActivities from './TotalActivities';
+import BannerActivities from "./BannerActivities";
+import BestActivities from "./BestActivities";
+import TotalActivities from "./TotalActivities";
 
-import Searchbar from '@/components/Searchbar';
-import { SORT_OPTIONS } from '@/constants/activities';
-import { useAuthStatus } from '@/hooks/useAuthStatus';
-import { useNotificationsCount } from '@/hooks/useNotificationsCount';
-import useWindowSize from '@/hooks/useWindowSize';
+import Searchbar from "@/components/searchbar/Searchbar";
+import { SORT_OPTIONS } from "@/constants/activities";
+import { useAuthStatus } from "@/hooks/useAuthStatus";
+import { useNotificationsCount } from "@/hooks/useNotificationsCount";
+import useWindowSize from "@/hooks/useWindowSize";
 import {
   CategoryType,
   RequestGetActivities,
   ResponseGetActivities,
   SortType,
-} from '@/types/activities';
+} from "@/types/activities";
 
 export default function LandingPageClient() {
   const { isAuthenticated } = useAuthStatus();
   const { refetch } = useNotificationsCount();
   const searchParams = useSearchParams();
-  const initialKeyword = searchParams.get('search');
+  const initialKeyword = searchParams.get("search");
   const width = useWindowSize();
   const [page, setPage] = useState(1);
-  const [sort, setSort] = useState<SortType>('latest');
+  const [sort, setSort] = useState<SortType>("latest");
   const [selectedFilter, setSelectedFilter] = useState<CategoryType | null>(
-    null
+    null,
   );
-  const [value, setValue] = useState(searchParams.get('search') ?? '');
+  const [value, setValue] = useState(searchParams.get("search") ?? "");
   const [keyword, setKeyword] = useState<string | null>(initialKeyword);
   const [mounted, setMounted] = useState(false);
   const [allLength, setAllLength] = useState<number>(8);
@@ -50,7 +50,7 @@ export default function LandingPageClient() {
 
   // 검색
   const handleSearch = () => {
-    setSort('latest');
+    setSort("latest");
     setSelectedFilter(null);
     setPage(1);
     setKeyword(value);
@@ -58,14 +58,14 @@ export default function LandingPageClient() {
 
   // 배너 체험
   const bannerParams: RequestGetActivities = {
-    method: 'offset',
-    sort: 'price_desc',
-    category: '투어',
+    method: "offset",
+    sort: "price_desc",
+    category: "투어",
     page: 1,
     size: 3,
   };
   const { data: bannerData } = useQuery({
-    queryKey: ['activities', 'banner'],
+    queryKey: ["activities", "banner"],
     queryFn: () => getActivities(bannerParams),
   });
 
@@ -77,12 +77,12 @@ export default function LandingPageClient() {
     [string, string], // queryKey 타입
     number | undefined // pageParam 타입
   >({
-    queryKey: ['activities', 'best'],
+    queryKey: ["activities", "best"],
     queryFn: ({ pageParam }) =>
       getActivities({
-        method: 'cursor',
+        method: "cursor",
         cursorId: pageParam,
-        sort: 'most_reviewed',
+        sort: "most_reviewed",
         size: 5,
       }),
     initialPageParam: undefined,
@@ -93,7 +93,7 @@ export default function LandingPageClient() {
 
   // 모든 체험
   const allParams: RequestGetActivities = {
-    method: 'offset',
+    method: "offset",
     sort: sort,
     page: page,
     size: allLength,
@@ -102,8 +102,8 @@ export default function LandingPageClient() {
   };
   const { data: allData, isLoading: isAllLoading } = useQuery({
     queryKey: [
-      'activities',
-      'all',
+      "activities",
+      "all",
       page,
       allLength,
       sort,
@@ -133,9 +133,9 @@ export default function LandingPageClient() {
   }, [mounted, width]);
 
   useEffect(() => {
-    const search = searchParams.get('search');
+    const search = searchParams.get("search");
     if (!search) {
-      setValue('');
+      setValue("");
       setKeyword(null);
     }
   }, [searchParams]);
