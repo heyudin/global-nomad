@@ -1,0 +1,25 @@
+name: Gemini Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Gemini API를 이용해 리뷰를 생성하는 액션 (예시 라이브러리 사용)
+      - name: Gemini AI Code Review
+        uses: google-gemini/gemini-github-action@main # 공식 혹은 신뢰할 수 있는 커뮤니티 액션 사용
+        with:
+          gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
+          model: "gemini-1.5-flash" # 혹은 gemini-1.5-pro
+          # 리뷰 가이드라인 설정
+          prompt: "코드의 버그, 성능 개선 사항, 가독성 위주로 한국어로 리뷰해줘."
