@@ -143,8 +143,12 @@ export default function LandingPageClient() {
     if (!search) {
       setValue("");
       setKeyword(null);
+    } else {
+      setValue(search);
+      setKeyword(search);
+      setPage(1);
     }
-  }, [searchParams]);
+  }, [searchParams, setValue]);
 
   return (
     <>
