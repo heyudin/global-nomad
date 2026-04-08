@@ -15,6 +15,7 @@ import BestActivities from "./BestActivities";
 import TotalActivities from "./TotalActivities";
 
 import Searchbar from "@/components/searchbar/Searchbar";
+import useQueryParams from "@/components/searchbar/useQueryParams";
 import { SORT_OPTIONS } from "@/constants/activities";
 import { useAuthStatus } from "@/hooks/useAuthStatus";
 import { useNotificationsCount } from "@/hooks/useNotificationsCount";
@@ -37,7 +38,7 @@ export default function LandingPageClient() {
   const [selectedFilter, setSelectedFilter] = useState<CategoryType | null>(
     null,
   );
-  const [value, setValue] = useState(searchParams.get("search") ?? "");
+  const { value, setValue, setQueryString } = useQueryParams("search");
   const [keyword, setKeyword] = useState<string | null>(initialKeyword);
   const [mounted, setMounted] = useState(false);
   const [allLength, setAllLength] = useState<number>(8);
@@ -54,6 +55,7 @@ export default function LandingPageClient() {
     setSelectedFilter(null);
     setPage(1);
     setKeyword(value);
+    setQueryString(value);
   };
 
   // 배너 체험
@@ -100,6 +102,7 @@ export default function LandingPageClient() {
     ...(selectedFilter && { category: selectedFilter }),
     ...(keyword && { keyword: keyword }),
   };
+
   const { data: allData, isLoading: isAllLoading } = useQuery({
     queryKey: [
       "activities",
@@ -114,6 +117,7 @@ export default function LandingPageClient() {
     enabled: !!allLength,
     placeholderData: (previousData) => previousData,
   });
+
   const totalPage = Math.ceil((allData?.totalCount ?? 0) / allLength);
   const handleClickPage = (page: number) => {
     setPage(page);

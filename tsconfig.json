@@ -2,7 +2,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -14,22 +18,30 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ],
     "plugins": [
       {
         "name": "next"
       }
     ],
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "src/*"
+      ]
     }
   },
   "include": [
-  "next-env.d.ts",
-  "**/*.ts",     // src 폴더뿐만 아니라 프로젝트 전체의 모든 .ts 파일 포함
-  "**/*.tsx",    // 모든 .tsx 파일 포함
-  "svg.d.ts",    // 아까 만든 선언 파일이 루트에 있다면 명시적으로 추가
-  ".next/types/**/*.ts"
-],
-  "exclude": ["node_modules"]
+    "next-env.d.ts",
+    "**/*.ts", // src 폴더뿐만 아니라 프로젝트 전체의 모든 .ts 파일 포함
+    "**/*.tsx", // 모든 .tsx 파일 포함
+    "svg.d.ts", // 아까 만든 선언 파일이 루트에 있다면 명시적으로 추가
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
