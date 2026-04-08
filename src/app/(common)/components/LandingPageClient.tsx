@@ -16,6 +16,7 @@ import TotalActivities from "./TotalActivities";
 
 import Searchbar from "@/components/searchbar/Searchbar";
 import useQueryParams from "@/components/searchbar/useQueryParams";
+
 import { SORT_OPTIONS } from "@/constants/activities";
 import { useAuthStatus } from "@/hooks/useAuthStatus";
 import { useNotificationsCount } from "@/hooks/useNotificationsCount";
@@ -39,6 +40,7 @@ export default function LandingPageClient() {
     null,
   );
   const { value, setValue, setQueryString } = useQueryParams("search");
+
   const [keyword, setKeyword] = useState<string | null>(initialKeyword);
   const [mounted, setMounted] = useState(false);
   const [allLength, setAllLength] = useState<number>(8);

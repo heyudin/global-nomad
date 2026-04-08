@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-
 import Button from "../Button";
 
 import ic_search from "@/assets/icons/main/ic-search.svg";
