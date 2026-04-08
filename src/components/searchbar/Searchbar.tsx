@@ -3,8 +3,6 @@ import Image from "next/image";
 
 import Button from "../Button";
 
-import useQueryParams from "./useQueryParams";
-
 import ic_search from "@/assets/icons/main/ic-search.svg";
 interface SearchbarProps {
   title: string;
@@ -17,8 +15,7 @@ interface SearchbarProps {
 /**
  * @example
  * const ContainerComponent = () => {
- *  const searchParams = useSearchParams();
- *  const [value, setValue] = useState(searchParams.get('search') ?? '');
+ *  const {value, setValue, setQueryString} = useQueryParams('search')
  *
  *  return(
  *    <Searchbar
