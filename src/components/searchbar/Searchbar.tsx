@@ -1,7 +1,5 @@
 "use client";
 import Image from "next/image";
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
-
 import Button from "../Button";
 
 import ic_search from "@/assets/icons/main/ic-search.svg";
@@ -16,8 +14,7 @@ interface SearchbarProps {
 /**
  * @example
  * const ContainerComponent = () => {
- *  const searchParams = useSearchParams();
- *  const [value, setValue] = useState(searchParams.get('search') ?? '');
+ *  const {value, setValue, setQueryString} = useQueryParams('search')
  *
  *  return(
  *    <Searchbar
@@ -38,25 +35,9 @@ export default function Searchbar({
   value,
   setValue,
 }: SearchbarProps) {
-  const searchParams = useSearchParams();
-  const pathName = usePathname();
-  const { replace } = useRouter();
-
   const handleClickButton = () => {
-    const params = new URLSearchParams(searchParams);
     const trimmedValue = value.trim();
-    if (!trimmedValue) {
-      params.delete("search");
-      replace(`${pathName}?${params.toString()}`, {
-        scroll: false,
-      });
-      return;
-    }
     onSearch?.(trimmedValue);
-    params.set("search", trimmedValue);
-    replace(`${pathName}?${params.toString()}`, {
-      scroll: false,
-    });
   };
 
   const handleEnterKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
